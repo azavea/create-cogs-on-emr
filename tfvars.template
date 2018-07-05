@@ -1,0 +1,17 @@
+aws_region = ""
+
+key_name = ""
+
+subnet_id = ""
+
+worker_count = ""
+
+cluster_name = ""
+
+master_instance_type = "m3.xlarge"
+
+master_bid_price = "0.07"
+
+worker_instance_type = "m3.xlarge"
+
+worker_bid_price = "0.07"

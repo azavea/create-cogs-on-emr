@@ -1,0 +1,7 @@
+# Terraform
+.terraform*
+terraform.tfstate*
+tfvars
+cluster-tfplan
+
+last-step-id.txt
