@@ -18,6 +18,12 @@ def get_input_and_output_paths():
     Return a list of tuples of  (input_uri, output_uri).
     URIs can be local paths or S3 paths.
     """
+
+    ##
+    # This is an example that reads some images from SpaceNet on S3 and creates
+    # COGs in another bucket.
+    ##
+
     import boto3
 
     bucket = 'spacenet-dataset'
