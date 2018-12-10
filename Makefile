@@ -9,8 +9,6 @@ MASTER_IP ?= $(shell cd terraform && terraform output | grep emr-master | awk '{
 KEY_NAME ?= $(shell cd terraform && terraform output | grep key-name | awk '{print $$NF}')
 KEY_PATH ?= "~/.ssh/${KEY_NAME}.pem"
 
-COG_EMR_S3_PREFIX := "s3://azavea-research-emr/cog-creator/spacenet"
-
 terraform-init:
 	cd terraform; terraform init
 
