@@ -12,6 +12,34 @@ from subprocess import Popen, PIPE
 
 NUM_PARTITIONS = 50
 
+def list_all_keys(s3_client, bucket, prefix):
+    """
+    `s3.list_objects` limits the number of objects returned to 123 by default.
+    This will get as many as possible each time until all objects have been
+    fetched.
+    """
+    key_list = []
+
+    while True:
+        kwargs = {
+            'Bucket': bucket,
+            'Prefix': prefix,
+            'MaxKeys': 1000,
+        }
+
+        if key_list:
+            kwargs['Marker'] = key_list[-1]
+
+        objects = s3_client.list_objects(**kwargs)
+
+        if 'Contents' in objects:
+            keys = [contents['Key'] for contents in objects['Contents']]
+            key_list = key_list + keys
+        else:
+            break
+
+    return key_list
+
 # Fill this out for your particular job.
 def get_input_and_output_paths():
     """
@@ -34,6 +62,9 @@ def get_input_and_output_paths():
         return "s3://azavea-research-emr/cog-creator/spacenet/test/{}.TIF".format(base_name)
 
     s3 = boto3.client('s3')
+
+    # NOTE: Depending on the number of images, you may want to use the
+    # `list_all_keys` function to get a listing of all the keys in one go
     list_result = s3.list_objects(Bucket=bucket, Prefix=prefix, Delimiter='/')
 
     result = []
